@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    FtpGames.getHighlightedGames();
+    const highlightedGames = FtpGames.getHighlightedGames();
   }, []);
 
   return <Navbar />;
