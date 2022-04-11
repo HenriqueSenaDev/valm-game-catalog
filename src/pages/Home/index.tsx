@@ -1,5 +1,13 @@
+import Navbar from "components/Navbar";
+import HighlightedShowcase from "./HighlightedShowcase";
+
 const Home = () => {
-  return <h1>Home</h1>;
+  return (
+    <>
+      <Navbar />
+      <HighlightedShowcase />
+    </>
+  );
 };
 
 export default Home;
