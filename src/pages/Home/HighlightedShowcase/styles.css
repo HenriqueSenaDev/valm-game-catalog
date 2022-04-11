@@ -1,2 +1,9 @@
 .highlighted--showcase{
+    padding: 35px 0 35px 20px;
+
+}
+.games--container img{
+    display: inline-block;
+    width: 500px;
+    height: auto;
 }

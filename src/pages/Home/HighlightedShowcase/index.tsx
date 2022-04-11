@@ -1,8 +1,8 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
-import { axiosInstance } from "services/FtpGames";
+import { api } from "services/FtpGames";
 
-interface IGame {
+interface IGames {
   developer: string;
   freetogame_profile_url: string;
   game_url: string;
@@ -16,36 +16,77 @@ interface IGame {
   title: string;
 }
 
-const HighlightedShowcase = () => {
-  const [highlightedGames, setHighlightedGames] = useState<object[]>([]);
-
-  const getHighlightedGames = (data: object[]) => {
-    const randomNumbers = new Set<number>();
-    for (let i = 0; i < 3; i++) {
-      const randomNumber: number = Math.floor(
-        Math.random() * (data.length - 1)
-      );
-      randomNumbers.add(randomNumber);
+interface IGame {
+  id: number;
+  title: string;
+  thumbnail: string;
+  status: string;
+  short_description: string;
+  game_url: string;
+  genre: string;
+  platform: string;
+  publisher: string;
+  developer: string;
+  release_date: string;
+  freetogame_profile_url: string;
+  minimum_system_requirements: {
+    os: string;
+    processor: string;
+    memory: string;
+    graphics: string;
+    storage: string;
+  };
+  screenshots: [
+    {
+      id: number;
+      image: string;
     }
+  ];
+}
 
-    let chosenGames: object[] = [];
-    randomNumbers.forEach((item) => {
-      chosenGames.push(data[item]);
+const HighlightedShowcase = () => {
+  const [highlightedGames, setHighlightedGames] = useState<IGame[]>([]);
+
+  const handleHighlighted = async () => {
+    const { data }: { data: IGames[] } = await api.get("games");
+    const ids: number[] = data.map(({ id }) => {
+      return id;
     });
 
-    return chosenGames;
+    const games: IGame[] = [];
+    for (let i = 0; i < 3; i++) {
+      const randomNumber = Math.floor(Math.random() * ids.length - 1);
+      const idChosen = ids[randomNumber];
+      console.log(idChosen);
+
+      const { data: game }: { data: IGame } = await api.get("game", {
+        params: {
+          id: idChosen,
+        },
+      });
+
+      console.log(game);
+      games.push(game);
+    }
+    setHighlightedGames(games);
   };
 
   useEffect(() => {
-    axiosInstance.get("games").then(({ data }: { data: object[] }) => {
-      const chosenGames = getHighlightedGames(data);
-      setHighlightedGames(chosenGames);
-    });
+    handleHighlighted();
   }, []);
 
   return (
     <>
-      <div className="highlighted--showcase"></div>
+      <div className="highlighted--showcase">
+        <div className="games--container">
+          {highlightedGames.map((element) => {
+            const { id } = element;
+            const [{ image }] = element.screenshots;
+
+            return <img src={image} key={id}></img>;
+          })}
+        </div>
+      </div>
     </>
   );
 };
