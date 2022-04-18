@@ -1,6 +1,9 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import { api } from "services/FtpGames";
+import CSS from "csstype";
+import GameHeader from "components/GameHeader";
+import StartingAt from "components/StartingAt";
 
 interface IGames {
   developer: string;
@@ -65,7 +68,7 @@ const HighlightedShowcase = () => {
         },
       });
 
-      console.log(game);
+      // console.log(game);
       games.push(game);
     }
     setHighlightedGames(games);
@@ -80,10 +83,30 @@ const HighlightedShowcase = () => {
       <div className="highlighted--showcase">
         <div className="games--container">
           {highlightedGames.map((element) => {
-            const { id } = element;
             const [{ image }] = element.screenshots;
+            const gameStyles: CSS.Properties = {
+              background: `url(${image}) center center/cover`,
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
+              backgroundBlendMode: "color",
+            };
 
-            return <img src={image} key={id}></img>;
+            return (
+              <div style={gameStyles} key={element.id} className="gameCard">
+                <GameHeader
+                  gameName={
+                    element.title.length < 17
+                      ? element.title
+                      : element.title.substring(0, 13) + "..."
+                  }
+                />
+                <span>
+                  {element.short_description.length < 60
+                    ? element.short_description
+                    : element.short_description.substring(0, 60) + "..."}
+                </span>
+                <StartingAt />
+              </div>
+            );
           })}
         </div>
       </div>
