@@ -1,0 +1,66 @@
+.gameCard{
+    height: 275px;
+    width: 215px;
+    padding: 35px 15px 20px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    object-fit: cover;
+    transform: scale(0.9);
+    transition: all ease 0.2s;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.gameCard:hover{
+    transform: scale(1);
+}
+.gameCard h1 {
+    text-align: center;
+
+}
+.gameCard span {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+}
+@media (min-width: 992px){
+    .gameCard:first-child{
+        width: 715px;
+        height: 402px;
+        transform: scale(0.9) translateX(+15%);
+        padding: 35px 25px 20px 25px;
+    }
+    .gameCard:first-child:hover{
+        transform: scale(0.98) translateX(+12%);
+    }
+    .gameCard:first-child h1 {
+        font-size: 33px;
+    }
+    .gameCard:first-child span {
+        max-width: 60%;
+        font-size: 20px;
+        line-height: 1.2;
+    }
+    .gameCard:nth-child(2){
+        transform: scale(0.9) translateY(-57%) translateX(+30%);
+        width: 300px;
+        height: 170px;
+        padding: 25px 15px 10px 15px;
+    }
+    .gameCard:nth-child(3){
+        transform: scale(0.9) translateY(+57%) translateX(-80%);
+        width: 300px;
+        height: 170px;
+        padding: 25px 15px 10px 15px;
+    }
+    .gameCard:nth-child(2):hover{
+        transform: scale(1) translateY(-57%) translateX(+32%);
+    }
+    .gameCard:nth-child(3):hover{
+        transform: scale(1) translateY(+55%) translateX(-68%);
+    }
+    .gameCard:nth-child(2) span,
+    .gameCard:nth-child(3) span {
+        display: none;
+    }
+}

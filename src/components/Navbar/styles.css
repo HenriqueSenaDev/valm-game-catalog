@@ -1,8 +1,10 @@
 .navbar--container {
+  width: 100%;
   font-weight: 500;
   min-height: 60px;
-  padding: 10px 20px;
+  padding: 10px 40px;
   color: #fff;
+  align-items: center;
 }
 .navbar--container a {
   display: flex;
@@ -13,7 +15,7 @@
   font-weight: 600;
   color: #fff;
 }
-.navbar--container img {
+.navbar--container svg{
   width: 20px;
   height: 20px;
 }
