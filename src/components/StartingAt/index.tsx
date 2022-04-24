@@ -3,7 +3,6 @@ import "./styles.css";
 const StartingAt = () => {
   return (
     <>
-      <br />
       <h2>
         A partir de:
         <br />

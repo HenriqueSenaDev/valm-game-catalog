@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "services/FtpGames";
 import HighlightedGame from "./HilghlightedGame";
 
@@ -47,6 +47,9 @@ interface IGame {
 
 const HighlightedShowcase = () => {
   const [highlightedGames, setHighlightedGames] = useState<IGame[]>([]);
+  const [gameListX, setGameListX] = useState<number>(
+    document.documentElement.clientWidth >= 992 ? 0 : 20
+  );
 
   const handleHighlighted = async () => {
     const { data }: { data: IGames[] } = await api.get("games");
@@ -71,17 +74,60 @@ const HighlightedShowcase = () => {
     setHighlightedGames(games);
   };
 
+
   useEffect(() => {
     handleHighlighted();
   }, []);
 
+
+  let touchStart: number;
+  const handleToucheStart = (event: any) => {
+    touchStart = event.changedTouches[0].clientX;
+  }
+  const handleToucheEnd = (event: any) => {
+    const touchEnd = event.changedTouches[0].clientX;
+
+    if (touchStart - touchEnd <= -100) {
+      let x = gameListX + (document.documentElement.clientWidth * 0.6);
+      if (x > 20) {
+        x = 20;
+      }
+      setGameListX(x);
+    }
+
+    if (touchStart - touchEnd >= 100) {
+      let x = gameListX - (document.documentElement.clientWidth * 0.6);
+      const lisW = document.documentElement.clientWidth < 576 ? 645 : 1320;
+      if ((document.documentElement.clientWidth - lisW) > x) {
+        x = (document.documentElement.clientWidth - lisW) - 10;
+      }
+      setGameListX(x);
+    }
+  }
+
   return (
     <>
       <div className="highlighted--showcase">
-        <div className="games--container">
-          {highlightedGames.map((element) => {
-            return <HighlightedGame element={element} key={element.title} />;
-          })}
+        <div className="highlightedGames--container">
+          <div className="highlightedGames--list"
+            style={{
+              marginLeft: gameListX
+            }}
+            onTouchStart={handleToucheStart}
+            onTouchEnd={handleToucheEnd}
+          >
+            {highlightedGames[0] &&
+              <>
+                <HighlightedGame element={highlightedGames[0]} key={highlightedGames[0].title} />
+                <div className="gameWrapper">
+                  {highlightedGames.map((element, index) => {
+                    return index > 0 ?
+                      <HighlightedGame element={element} key={element.title} /> : null
+                  })}
+                </div>
+              </>
+            }
+          </div>
         </div>
       </div>
     </>

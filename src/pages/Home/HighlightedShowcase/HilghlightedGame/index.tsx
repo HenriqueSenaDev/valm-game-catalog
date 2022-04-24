@@ -47,22 +47,22 @@ const HighlightedGame = ({ element }: gameProps) => {
     <div style={gameStyles} key={element.id} className="gameCard">
       <GameHeader
         gameName={
-          window.screen.width >= 992
+          document.documentElement.clientWidth >= 992
             ? element.title.length < 30
               ? element.title
               : element.title.substring(0, 25) + "..."
             : element.title.length < 17
-            ? element.title
-            : element.title.substring(0, 13) + "..."
+              ? element.title
+              : element.title.substring(0, 13) + "..."
         }
       />
-      <span>
-        {window.screen.width >= 992
-          ? element.short_description
-          : element.short_description.length > 50
-          ? element.short_description.substring(0, 45) + "..."
-          : null}
-      </span>
+      {document.documentElement.clientWidth >= 992 ? (
+        <span>{element.short_description}</span>
+      ) : element.short_description.length < 75 ? (
+        <span>{element.short_description}</span>
+      ) : (
+        <span>{element.short_description.substring(0, 75) + "..."}</span>
+      )}
       <StartingAt />
     </div>
   );

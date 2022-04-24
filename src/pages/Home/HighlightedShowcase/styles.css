@@ -1,21 +1,42 @@
-.highlighted--showcase{
-    padding: 30px 0 35px 20px;
-    max-width: 100%;
+.highlighted--showcase {
+    padding: 20px 0 35px 0;
 }
-.games--container {
-    width: 680px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.highlightedGames--container {
+    width: 100%;
     overflow-x: hidden;
 }
-@media(min-width:992px){
-    .highlighted--showcase{
+
+.highlightedGames--list {
+    display: flex;
+    width: 645px;
+    transition: all ease 0.2s;
+}
+
+.gameWrapper {
+    display: flex;
+}
+
+@media (min-width: 992px) {
+    .highlighted--showcase {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
     }
-    .games--container {
-        width: 90%;
+
+    .highlightedGames--container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .highlightedGames--list {
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .gameWrapper {
+        flex-direction: column;
     }
 }
